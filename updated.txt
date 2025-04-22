@@ -1,0 +1,368 @@
+
+-- VoidScripts Private | Developer: coolskid | Developer: deluu
+
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "VoidScriptsPrivate"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Function to add UIGradient
+local function addGradient(parent)
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 0, 90)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 25, 35)),
+    })
+    gradient.Parent = parent
+end
+
+-- Key System UI
+local keyFrame = Instance.new("Frame")
+keyFrame.Size = UDim2.new(0, 400, 0, 300)
+keyFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+keyFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+keyFrame.BorderSizePixel = 0
+keyFrame.Parent = gui
+addGradient(keyFrame)
+
+local keyLabel = Instance.new("TextLabel")
+keyLabel.Size = UDim2.new(1, 0, 0, 50)
+keyLabel.Position = UDim2.new(0, 0, 0, 0)
+keyLabel.Text = "Enter Key to Access VoidScripts"
+keyLabel.TextColor3 = Color3.new(1, 1, 1)
+keyLabel.Font = Enum.Font.GothamBold
+keyLabel.TextSize = 20
+keyLabel.BackgroundTransparency = 1
+keyLabel.Parent = keyFrame
+
+local keyInput = Instance.new("TextBox")
+keyInput.Size = UDim2.new(1, -20, 0, 50)
+keyInput.Position = UDim2.new(0, 10, 0, 60)
+keyInput.PlaceholderText = "Enter your key here"
+keyInput.Text = ""
+keyInput.TextColor3 = Color3.new(1, 1, 1)
+keyInput.Font = Enum.Font.Gotham
+keyInput.TextSize = 18
+keyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+keyInput.BorderSizePixel = 0
+keyInput.Parent = keyFrame
+addGradient(keyInput)
+
+local submitButton = Instance.new("TextButton")
+submitButton.Size = UDim2.new(1, -20, 0, 50)
+submitButton.Position = UDim2.new(0, 10, 0, 120)
+submitButton.Text = "Submit Key"
+submitButton.TextColor3 = Color3.new(1, 1, 1)
+submitButton.Font = Enum.Font.GothamBold
+submitButton.TextSize = 18
+submitButton.BackgroundColor3 = Color3.fromRGB(35, 0, 60)
+submitButton.Parent = keyFrame
+addGradient(submitButton)
+
+local copyUrlButton1 = Instance.new("TextButton")
+copyUrlButton1.Size = UDim2.new(1, -20, 0, 50)
+copyUrlButton1.Position = UDim2.new(0, 10, 0, 180)
+copyUrlButton1.Text = "Copy Key"
+copyUrlButton1.TextColor3 = Color3.new(1, 1, 1)
+copyUrlButton1.Font = Enum.Font.GothamBold
+copyUrlButton1.TextSize = 18
+copyUrlButton1.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+copyUrlButton1.Parent = keyFrame
+addGradient(copyUrlButton1)
+
+local copyUrlButton2 = Instance.new("TextButton")
+copyUrlButton2.Size = UDim2.new(1, -20, 0, 50)
+copyUrlButton2.Position = UDim2.new(0, 10, 0, 240)
+copyUrlButton2.Text = "Our Discord!"
+copyUrlButton2.TextColor3 = Color3.new(1, 1, 1)
+copyUrlButton2.Font = Enum.Font.GothamBold
+copyUrlButton2.TextSize = 18
+copyUrlButton2.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+copyUrlButton2.Parent = keyFrame
+addGradient(copyUrlButton2)
+
+local errorLabel = Instance.new("TextLabel")
+errorLabel.Size = UDim2.new(1, 0, 0, 30)
+errorLabel.Position = UDim2.new(0, 0, 1, -30)
+errorLabel.Text = ""
+errorLabel.TextColor3 = Color3.new(1, 0, 0)
+errorLabel.Font = Enum.Font.Gotham
+errorLabel.TextSize = 14
+errorLabel.BackgroundTransparency = 1
+errorLabel.Visible = false
+errorLabel.Parent = keyFrame
+
+-- Main GUI (Hidden Until Key is Verified)
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 600, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -300, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+mainFrame.BorderSizePixel = 0
+mainFrame.Visible = false -- Initially hidden
+mainFrame.Parent = gui
+addGradient(mainFrame)
+
+-- Hardcoded Key and URLs
+local validKey = "EnterNu1588" -- Change this to your desired key
+local urlToCopy1 = "https://work.ink/1Zgn/xcuww6mz" -- Replace this with your first URL
+local urlToCopy2 = "https://discord.gg/zGXJnFnN2n" -- Replace this with your second URL
+
+-- Copy URL Button 1 Logic
+copyUrlButton1.MouseButton1Click:Connect(function()
+    if setclipboard then
+        setclipboard(urlToCopy1)
+        errorLabel.Text = "Key copied to clipboard!"
+        errorLabel.TextColor3 = Color3.new(0, 1, 0) -- Success message in green
+        errorLabel.Visible = true
+    else
+        errorLabel.Text = "Copying to clipboard is not supported on this platform."
+        errorLabel.TextColor3 = Color3.new(1, 0, 0)
+        errorLabel.Visible = true
+    end
+end)
+
+-- Copy URL Button 2 Logic
+copyUrlButton2.MouseButton1Click:Connect(function()
+    if setclipboard then
+        setclipboard(urlToCopy2)
+        errorLabel.Text = "Discord copied to clipboard!"
+        errorLabel.TextColor3 = Color3.new(0, 1, 0) -- Success message in green
+        errorLabel.Visible = true
+    else
+        errorLabel.Text = "Copying to clipboard is not supported on this platform."
+        errorLabel.TextColor3 = Color3.new(1, 0, 0)
+        errorLabel.Visible = true
+    end
+end)
+
+-- Submit Button Logic
+submitButton.MouseButton1Click:Connect(function()
+    local enteredKey = keyInput.Text
+    if enteredKey == "" then
+        errorLabel.Text = "Key cannot be empty!"
+        errorLabel.TextColor3 = Color3.new(1, 0, 0)
+        errorLabel.Visible = true
+        return
+    end
+
+    if enteredKey == validKey then
+        keyFrame.Visible = false
+        mainFrame.Visible = true
+    else
+        errorLabel.Text = "Invalid key! Please try again."
+        errorLabel.TextColor3 = Color3.new(1, 0, 0)
+        errorLabel.Visible = true
+    end
+end)
+
+-- Main GUI Content
+-- Add your existing GUI content here, including minimize buttons, tabs, and script buttons
+-- Minimize Button
+local miniButton = Instance.new("ImageButton")
+miniButton.Size = UDim2.new(0, 50, 0, 50)
+miniButton.Position = UDim2.new(0, 10, 1, -60)
+miniButton.BackgroundTransparency = 1
+miniButton.Image = "rbxassetid://100300621836141" -- Icon ID
+miniButton.Visible = false -- Initially hidden
+miniButton.Parent = gui
+
+-- Top Bar
+local topBar = Instance.new("TextLabel")
+topBar.Size = UDim2.new(1, 0, 0, 40)
+topBar.BackgroundColor3 = Color3.fromRGB(60, 0, 90)
+topBar.Text = "VoidScripts Private | Developer: coolskid | Developer: deluu"
+topBar.TextColor3 = Color3.new(1, 1, 1)
+topBar.Font = Enum.Font.GothamBold
+topBar.TextSize = 20
+topBar.Parent = mainFrame
+
+-- Close Button (Top-Right Corner)
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 30, 0, 40)
+closeButton.Position = UDim2.new(1, -30, 0, 0)
+closeButton.Text = "X"
+closeButton.BackgroundColor3 = Color3.fromRGB(90, 0, 0)
+closeButton.TextColor3 = Color3.new(1, 1, 1)
+closeButton.Font = Enum.Font.GothamBold
+closeButton.TextSize = 20
+closeButton.Parent = topBar
+
+-- Tab Menu
+local tabMenu = Instance.new("Frame")
+tabMenu.Size = UDim2.new(0, 120, 1, -40)
+tabMenu.Position = UDim2.new(0, 0, 0, 40)
+tabMenu.BackgroundColor3 = Color3.fromRGB(35, 0, 60)
+tabMenu.Parent = mainFrame
+
+local function createTabButton(text, yPos)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 30)
+    btn.Position = UDim2.new(0, 0, 0, yPos)
+    btn.Text = text
+    btn.BackgroundColor3 = Color3.fromRGB(60, 0, 90)
+    btn.TextColor3 = Color3.new(1, 1, 1)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 16
+    btn.Parent = tabMenu
+    return btn
+end
+
+local scriptsTab = createTabButton("Scripts", 0)
+local verifiedTab = createTabButton("Verified", 35)
+local feTab = createTabButton("FE", 70)
+local settingsTab = createTabButton("Settings", 105)
+
+-- Content Areas
+local function createContentArea()
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, -120, 1, -40)
+    frame.Position = UDim2.new(0, 120, 0, 40)
+    frame.BackgroundColor3 = Color3.fromRGB(40, 0, 70)
+    frame.Visible = false
+    frame.Parent = mainFrame
+    return frame
+end
+
+local scriptsContent = createContentArea()
+local verifiedContent = createContentArea()
+local feContent = createContentArea()
+local settingsContent = createContentArea()
+
+-- Hide All Content Areas
+local function hideAll()
+    scriptsContent.Visible = false
+    verifiedContent.Visible = false
+    feContent.Visible = false
+    settingsContent.Visible = false
+end
+
+-- Tab Button Logic
+scriptsTab.MouseButton1Click:Connect(function()
+    hideAll()
+    scriptsContent.Visible = true
+end)
+
+verifiedTab.MouseButton1Click:Connect(function()
+    hideAll()
+    verifiedContent.Visible = true
+end)
+
+feTab.MouseButton1Click:Connect(function()
+    hideAll()
+    feContent.Visible = true
+end)
+
+settingsTab.MouseButton1Click:Connect(function()
+    hideAll()
+    settingsContent.Visible = true
+end)
+
+-- Function to Create Buttons in Categories
+local function createScriptButton(parent, name, scriptUrl, yPos)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 200, 0, 50)
+    btn.Position = UDim2.new(0, 10, 0, yPos)
+    btn.Text = name
+    btn.BackgroundColor3 = Color3.fromRGB(60, 0, 90)
+    btn.TextColor3 = Color3.new(1, 1, 1)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 16
+    btn.Parent = parent
+
+    -- Button Logic to Execute Script
+    btn.MouseButton1Click:Connect(function()
+        local success, errorMessage = pcall(function()
+            local scriptCode = game:HttpGet(scriptUrl)
+            loadstring(scriptCode)()
+        end)
+        if not success then
+            warn("Error executing script '" .. name .. "': " .. errorMessage)
+        end
+    end)
+end
+
+--Buttons in Scripts Category
+createScriptButton(scriptsContent, "Ghost Hub", "https://raw.githubusercontent.com/GhostPlayer352/Test4/main/GhostHub", 0)
+createScriptButton(scriptsContent, "UNC Checker", "https://raw.githubusercontent.com/crumies/UNC-test/main/UNC.lua", 60)
+createScriptButton(scriptsContent, "DarkDex", "https://raw.githubusercontent.com/nuIIism/scripts/main/dex.lua", 120)
+
+-- Buttons in Verified Category
+createScriptButton(verifiedContent, "Quirky CMD", "https://gist.github.com/someunknowndude/38cecea5be9d75cb743eac8b1eaf6758/raw", 0)
+createScriptButton(verifiedContent, "Ez Hub", "https://raw.githubusercontent.com/debug42O/Ez-Industries-Launcher-Data/master/Launcher.lua", 60)
+createScriptButton(verifiedContent, "Bring Parts", "https://raw.githubusercontent.com/Bac0nHck/Scripts/main/BringFlingPlayers", 120)
+createScriptButton(verifiedContent, "Zero Gravity", "https://raw.githubusercontent.com/Bac0nHck/Scripts/refs/heads/main/zerogravity", 180)
+createScriptButton(verifiedContent, "Emote Gui AFEM", "https://yarhm.mhi.im/scr?channel=afem", 240)
+
+-- Buttons in FE Category
+createScriptButton(feContent, "Hat Hub", "https://raw.githubusercontent.com/inkdupe/hat-scripts/refs/heads/main/updatedhathub.lua", 0)
+createScriptButton(feContent, "FE Seraphic Blade R6", "https://pastefy.app/59mJGQGe/raw", 60)
+createScriptButton(feContent, "FE Scp-096 R6", "https://pastefy.app/M25RnnGm/raw", 120)
+createScriptButton(feContent, "FE ShapeShifter R6", "https://pastefy.app/2C3cRXXp/raw", 180)
+
+-- Close Button Logic (Hides Main GUI and Shows Minimize Icon)
+closeButton.MouseButton1Click:Connect(function()
+    mainFrame.Visible = false
+    miniButton.Visible = true
+end)
+
+-- Minimize Button Logic (Shows Main GUI and Hides Minimize Icon)
+miniButton.MouseButton1Click:Connect(function()
+    mainFrame.Visible = true
+    miniButton.Visible = false
+end)
+
+-- Dragging Logic for Main GUI
+local dragging = false
+local dragInput, dragStart, startPos
+
+topBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+topBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Add Home Tab Button
+local homeTab = createTabButton("Home", 140)
+
+-- Create Home Content Area
+local homeContent = createContentArea()
+
+-- Update hideAll() to include homeContent
+local originalHideAll = hideAll
+hideAll = function()
+    originalHideAll()
+    homeContent.Visible = false
+end
+
+-- Home Tab Button Logic
+homeTab.MouseButton1Click:Connect(function()
+    hideAll()
+    homeContent.Visible = true
+end)
+-- Buttons in Home Tab
+createScriptButton(homeContent, "YARHM Hub", "https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", 0)
+createScriptButton(homeContent, "Solara Hub", "https://rawscripts.net/raw/Universal-Script-Solara-Hub-Keyless-195-Games-20988", 60)
